@@ -1,46 +1,28 @@
-# RAG Q&A System
+# RAG Q&A
 
-Document Q&A system built from scratch without LangChain. Upload PDFs, TXT, or MD files, ask questions, and get answers with source citations.
+I wanted to understand how RAG actually works under the hood so I built this from scratch. No LangChain, no abstractions. Just the OpenAI SDK, FAISS for vector search, and Streamlit for the UI.
 
-## How it works
+Upload any PDF, TXT, or MD file. Ask questions. Get answers with citations pointing back to the exact chunk the answer came from.
 
-1. Documents are split into chunks using recursive token-based chunking
-2. Each chunk is embedded using OpenAI text-embedding-ada-002
-3. Embeddings are indexed in a FAISS vector store for fast similarity search
-4. Questions are matched against chunks using cosine similarity
-5. Top matching chunks are sent to GPT-3.5-turbo for answer generation with source citations
+## what it does
 
-## Tech
+Takes your documents, splits them into token-based chunks with configurable overlap, embeds each chunk with OpenAI ada-002, indexes them in FAISS, then does cosine similarity search when you ask a question. The top matching chunks get passed to GPT-3.5 as context and it generates an answer with source citations.
 
-- Python
-- OpenAI API (embeddings + chat completions)
-- FAISS (vector search)
-- Streamlit (UI)
-- PyPDF2 (PDF parsing)
-- tiktoken (token counting)
+The whole pipeline is about 130 lines of Python. No wrappers, no chain classes, no agents framework.
 
-## Features
+## stack
 
-- Recursive chunking with configurable chunk size and overlap
-- Batch embedding processing
-- Cosine similarity search with FAISS
-- Source citations in every answer (document name + chunk number)
-- Supports PDF, TXT, and MD file uploads
-- No LangChain, no abstractions, built from raw OpenAI SDK
+Python, OpenAI API, FAISS, Streamlit, PyPDF2, tiktoken
 
-## Run locally
+## run it
 
-```bash
+```
 pip install -r requirements.txt
 streamlit run app.py
 ```
 
-You'll need an OpenAI API key. Enter it in the sidebar when the app loads.
+You need an OpenAI API key. Paste it in the sidebar.
 
-## Live demo
+## live
 
-https://rag-qa-system-karthiksai109.streamlit.app
-
-## Built by
-
-Karthik Ramadugu - [Portfolio](https://karthikramadugu.vercel.app) | [LinkedIn](https://linkedin.com/in/ramadugukarthik)
+https://rag-app-system-fcfbmqzjrgjwdpezdzghqp.streamlit.app
